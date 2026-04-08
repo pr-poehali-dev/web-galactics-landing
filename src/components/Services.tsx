@@ -1,5 +1,10 @@
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
+
+interface ServicesProps {
+  onOpenModal?: () => void;
+}
 
 const services = [
   {
@@ -76,7 +81,7 @@ const services = [
   },
 ];
 
-const Services = () => {
+const Services = ({ onOpenModal }: ServicesProps) => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
   const toggle = (index: number) => {
@@ -200,6 +205,14 @@ const Services = () => {
                         </div>
                       </div>
                     </div>
+
+                    <Button
+                      onClick={onOpenModal}
+                      className="w-full neon-button text-white border-0 gap-2 mt-5"
+                    >
+                      <Icon name="Send" size={16} />
+                      Заказать
+                    </Button>
                   </div>
 
                   <button

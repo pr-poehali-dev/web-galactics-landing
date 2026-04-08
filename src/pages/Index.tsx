@@ -21,7 +21,7 @@ const Index = () => {
       <Header onOpenModal={openModal} />
       <Hero onOpenModal={openModal} />
       <About />
-      <Services />
+      <Services onOpenModal={openModal} />
       <Portfolio />
       <Advantages />
       <Reviews />
