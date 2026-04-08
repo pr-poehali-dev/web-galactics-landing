@@ -17,25 +17,25 @@ const services = [
     icon: "Smartphone",
     title: "Мобильная разработка",
     desc: "Адаптивные и нативные мобильные приложения для iOS и Android",
-    gradient: "from-purple-700 via-indigo-600 to-cyan-600",
+    image: "https://cdn.poehali.dev/projects/b117055f-ea17-414e-9dd0-0279e76de211/files/b6efddb8-de31-4aaa-8607-42c0f87098e2.jpg",
   },
   {
     icon: "TrendingUp",
     title: "SEO Продвижение",
     desc: "Выводим ваш сайт в топ поисковых систем и увеличиваем органический трафик",
-    gradient: "from-cyan-600 via-blue-600 to-purple-700",
+    image: "https://cdn.poehali.dev/projects/b117055f-ea17-414e-9dd0-0279e76de211/files/6176c088-636e-4699-87a3-5cacc772fd6e.jpg",
   },
   {
     icon: "Headphones",
     title: "Техническая поддержка",
     desc: "Круглосуточная поддержка и обслуживание ваших цифровых проектов",
-    gradient: "from-purple-700 via-pink-600 to-rose-600",
+    image: "https://cdn.poehali.dev/projects/b117055f-ea17-414e-9dd0-0279e76de211/files/307d46ff-dffc-4bc0-ab24-e397bfd8edb9.jpg",
   },
   {
     icon: "ShoppingCart",
     title: "Интернет-магазины",
     desc: "Разработка e-commerce решений с интеграцией платёжных систем",
-    gradient: "from-blue-700 via-indigo-600 to-purple-700",
+    image: "https://cdn.poehali.dev/projects/b117055f-ea17-414e-9dd0-0279e76de211/files/2ee9a629-c2bf-4cce-a0e0-3065519596dd.jpg",
   },
 ];
 
@@ -71,29 +71,11 @@ const Services = () => {
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="relative h-48 overflow-hidden">
-                {service.image ? (
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                ) : (
-                  <div className={`w-full h-full bg-gradient-to-br ${service.gradient} relative`}>
-                    <div className="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-white/10 blur-xl" />
-                    <div className="absolute bottom-1/3 right-1/4 w-12 h-12 rounded-full bg-white/5 blur-lg" />
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 rounded-full bg-white/40 animate-twinkle"
-                        style={{
-                          top: `${20 + Math.random() * 60}%`,
-                          left: `${10 + Math.random() * 80}%`,
-                          animationDelay: `${i * 0.4}s`,
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
                 <div className={`absolute bottom-4 left-4 w-12 h-12 rounded-xl flex items-center justify-center backdrop-blur-md ${
                   index % 2 === 0
