@@ -106,30 +106,32 @@ const Header = ({ onOpenModal }: HeaderProps) => {
       </div>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden" onClick={() => setMobileOpen(false)}>
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-          <div
-            className="absolute right-0 top-0 h-full w-72 glass-strong cosmic-gradient p-8 pt-20 flex flex-col gap-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <Icon name="Rocket" size={24} className="text-primary animate-pulse-neon" />
+        <div className="fixed inset-0 z-40 lg:hidden">
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={() => setMobileOpen(false)} />
+          <div className="absolute inset-0 top-0 h-full w-full bg-background/90 backdrop-blur-xl p-8 pt-20 flex flex-col gap-5 overflow-y-auto">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="relative">
+                <div className="absolute inset-0 bg-primary/30 blur-xl rounded-full scale-150" />
+                <Icon name="Rocket" size={24} className="text-primary relative animate-pulse-neon" />
+              </div>
               <span className="text-lg font-bold neon-text text-primary" style={{ fontFamily: "'Orbitron', sans-serif" }}>
                 Web Galactics
               </span>
             </div>
+            <div className="h-px bg-gradient-to-r from-primary/20 via-secondary/10 to-transparent" />
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => smoothScroll(e, link.href)}
-                className="text-muted-foreground hover:text-foreground hover:neon-text transition-all py-1"
+                className="text-lg text-muted-foreground hover:text-foreground hover:neon-text transition-all py-2"
               >
                 {link.label}
               </a>
             ))}
-            <Button onClick={() => { setMobileOpen(false); onOpenModal?.(); }} className="neon-button text-white border-0 mt-4 gap-2">
-              <Icon name="Send" size={16} />
+            <div className="h-px bg-gradient-to-r from-primary/20 via-secondary/10 to-transparent mt-2" />
+            <Button onClick={() => { setMobileOpen(false); onOpenModal?.(); }} className="neon-button text-white border-0 mt-2 gap-2 py-6 text-base">
+              <Icon name="Send" size={18} />
               Оставить заявку
             </Button>
           </div>
