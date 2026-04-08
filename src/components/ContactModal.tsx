@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,7 @@ import funcUrls from "../../backend/func2url.json";
 interface ContactModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  serviceName?: string;
 }
 
 interface FormData {
@@ -28,11 +29,20 @@ interface FormErrors {
   consent?: string;
 }
 
-const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
+const ContactModal = ({ open, onOpenChange, serviceName }: ContactModalProps) => {
   const [form, setForm] = useState<FormData>({ name: "", phone: "", email: "", message: "" });
   const [consent, setConsent] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (open && serviceName) {
+      setForm((prev) => ({
+        ...prev,
+        message: prev.message || `Интересует услуга: ${serviceName}`,
+      }));
+    }
+  }, [open, serviceName]);
 
   const resetForm = () => {
     setForm({ name: "", phone: "", email: "", message: "" });
@@ -66,7 +76,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
       const res = await fetch(funcUrls["send-contact"], {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, source: "modal" }),
+        body: JSON.stringify({ ...form, source: serviceName ? `Заказ: ${serviceName}` : "modal" }),
       });
       if (!res.ok) throw new Error("Failed");
       toast.success("Заявка отправлена! Мы свяжемся с вами в ближайшее время.");
@@ -108,6 +118,12 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
           <DialogDescription className="text-sm text-muted-foreground">
             Заполните форму и мы свяжемся с вами в течение 30 минут
           </DialogDescription>
+          {serviceName && (
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs text-primary mt-2 w-fit">
+              <Icon name="Sparkles" size={12} />
+              {serviceName}
+            </div>
+          )}
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 relative z-10 mt-4">

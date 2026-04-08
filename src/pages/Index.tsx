@@ -13,22 +13,26 @@ import ContactModal from "@/components/ContactModal";
 
 const Index = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalService, setModalService] = useState<string | undefined>();
 
-  const openModal = () => setModalOpen(true);
+  const openModal = (service?: string) => {
+    setModalService(service);
+    setModalOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <Header onOpenModal={openModal} />
-      <Hero onOpenModal={openModal} />
+      <Header onOpenModal={() => openModal()} />
+      <Hero onOpenModal={() => openModal()} />
       <About />
       <Services onOpenModal={openModal} />
       <Portfolio />
       <Advantages />
       <Reviews />
-      <Calculator onOpenModal={openModal} />
+      <Calculator onOpenModal={() => openModal()} />
       <ContactForm />
       <Footer />
-      <ContactModal open={modalOpen} onOpenChange={setModalOpen} />
+      <ContactModal open={modalOpen} onOpenChange={setModalOpen} serviceName={modalService} />
     </div>
   );
 };
