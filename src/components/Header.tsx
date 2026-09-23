@@ -29,6 +29,13 @@ const Header = ({ onOpenModal }: HeaderProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setMobileOpen(false);
@@ -106,32 +113,73 @@ const Header = ({ onOpenModal }: HeaderProps) => {
       </div>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden" onClick={() => setMobileOpen(false)}>
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+        <div className="fixed inset-0 z-40 lg:hidden">
           <div
-            className="absolute right-0 top-0 h-full w-72 glass-strong cosmic-gradient p-8 pt-20 flex flex-col gap-6"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <Icon name="Rocket" size={24} className="text-primary animate-pulse-neon" />
-              <span className="text-lg font-bold neon-text text-primary" style={{ fontFamily: "'Orbitron', sans-serif" }}>
-                Web Galactics
-              </span>
-            </div>
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => smoothScroll(e, link.href)}
-                className="text-muted-foreground hover:text-foreground hover:neon-text transition-all py-1"
+            className="absolute inset-0 bg-[hsl(var(--space-dark)/0.85)] backdrop-blur-md animate-menu-fade-in"
+            onClick={() => setMobileOpen(false)}
+          />
+          <div className="absolute inset-x-0 top-0 h-full cosmic-gradient border-b border-primary/25 shadow-[0_10px_60px_hsl(var(--neon-purple)/0.25)] overflow-y-auto animate-menu-slide-down">
+            <div className="absolute top-0 right-0 w-56 h-56 bg-primary/10 rounded-full blur-[90px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-56 h-56 bg-secondary/10 rounded-full blur-[90px] pointer-events-none" />
+
+            <div className="relative z-10 px-6 pt-24 pb-10 flex flex-col min-h-full">
+              <div
+                className="flex items-center gap-2 pb-5 animate-menu-item"
+                style={{ animationDelay: "0.1s" }}
               >
-                {link.label}
-              </a>
-            ))}
-            <Button onClick={() => { setMobileOpen(false); onOpenModal?.(); }} className="neon-button text-white border-0 mt-4 gap-2">
-              <Icon name="Send" size={16} />
-              Оставить заявку
-            </Button>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-primary/30 blur-xl rounded-full scale-150" />
+                  <Icon name="Rocket" size={26} className="text-primary relative animate-pulse-neon" />
+                </div>
+                <span
+                  className="text-xl font-bold neon-text text-primary"
+                  style={{ fontFamily: "'Orbitron', sans-serif" }}
+                >
+                  Web Galactics
+                </span>
+              </div>
+
+              <div className="h-px bg-gradient-to-r from-primary/40 via-secondary/20 to-transparent" />
+
+              <nav className="flex flex-col py-3">
+                {navLinks.map((link, i) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => smoothScroll(e, link.href)}
+                    className="group flex items-center justify-between py-3.5 text-lg text-foreground/85 hover:text-primary transition-colors border-b border-border/30 animate-menu-item"
+                    style={{ animationDelay: `${0.15 + i * 0.05}s` }}
+                  >
+                    <span className="group-hover:neon-text transition-all">{link.label}</span>
+                    <Icon
+                      name="ChevronRight"
+                      size={18}
+                      className="text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all"
+                    />
+                  </a>
+                ))}
+              </nav>
+
+              <Button
+                onClick={() => {
+                  setMobileOpen(false);
+                  onOpenModal?.();
+                }}
+                className="neon-button text-white border-0 gap-2 py-6 text-base mt-4 animate-menu-item"
+                style={{ animationDelay: `${0.15 + navLinks.length * 0.05}s` }}
+              >
+                <Icon name="Send" size={18} />
+                Оставить заявку
+              </Button>
+
+              <div
+                className="flex items-center justify-center gap-2 text-xs text-muted-foreground mt-6 animate-menu-item"
+                style={{ animationDelay: `${0.2 + navLinks.length * 0.05}s` }}
+              >
+                <Icon name="Sparkles" size={14} className="text-primary/60" />
+                Создаём сайты, которые выводят бизнес на орбиту
+              </div>
+            </div>
           </div>
         </div>
       )}
