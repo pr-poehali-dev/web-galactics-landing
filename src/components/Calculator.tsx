@@ -17,7 +17,7 @@ const siteTypes = [
 const features = [
   { id: "responsive", label: "Адаптивный дизайн", price: 15000, icon: "Monitor" },
   { id: "cms", label: "CMS система", price: 25000, icon: "Settings" },
-  { id: "cabinet", label: "Личный кабинет", price: 40000, icon: "User" },
+  { id: "cabinet", label: "Личный кабинет", price: 45000, icon: "User" },
   { id: "payment", label: "Онлайн-оплата", price: 30000, icon: "CreditCard" },
   { id: "seo", label: "SEO оптимизация", price: 20000, icon: "Search" },
   { id: "multilang", label: "Мультиязычность", price: 35000, icon: "Languages" },
